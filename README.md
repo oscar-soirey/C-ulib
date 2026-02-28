@@ -1,18 +1,14 @@
 # C-ULIB
 C-ulib is an extension of C-standard library and offers features such as vector, map, smart string, and others.
 
-## Class
-### ulib ver. 2.0
+## Class (2.0)
 This header provides a complete objet oriented programming features in C.
 
-## Map
-### ulib ver. 1.1
+## Map (1.1)
 
-## String
-### ulib ver. 1.1
+## String (1.1)
 
-## Vector
-### ulib ver. 1.0
+## Vector (1.0)
 To register a user-defined type, you can use the macro : `CVECTOR(type, name, eq_operator_func)` The equal operator func needs to have this signature : int {func_name}(const {T}* a, const {T}* b) with {T} the type of the vector
 List of vector functions with {T} the name of the type : 
 - `{T}_freevec(vec)` free the vector allocated memory.
@@ -31,11 +27,9 @@ List of vector functions with {T} the name of the type :
 - `{T}_append(vec, vec)` concatenate second vector to the first.
 - `{T}_contains(vec, elem)` returns 1 if vec contains the element.
 
-## Umap
-### ulib ver. 1.0
+## Umap (1.0)
 
-## Memory
-### ulib ver. 1.0
+## Memory (1.0)
 The cmemory lib is a collection of helpers to manage C memory, it offers features such as safe-delete, memory alloc check, value swap, static array count, ...
 List of features : 
 - `cnew(type)` allocate on the heap an instance of the desired type and returns a pointer.
@@ -46,5 +40,4 @@ List of features :
 - `cmin(a, b)` returns the less
 - `cmax(a, b)` returns the greater
 
-## Filesystem
-### ulib ver 1.0
+## Filesystem (1.0)
