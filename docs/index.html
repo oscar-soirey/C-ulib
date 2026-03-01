@@ -995,10 +995,14 @@ body .task-list-item input {
 <body>
 <h1 id="c-ulib">C-ULIB</h1>
 <p>C-ulib is an extension of C-standard library and offers features such as vector, map, smart string, and others.</p>
+<hr />
 <h2 id="class-20">Class (2.0)</h2>
 <p>This header provides a complete objet oriented programming features in C.</p>
+<hr />
 <h2 id="map-11">Map (1.1)</h2>
+<hr />
 <h2 id="string-11">String (1.1)</h2>
+<hr />
 <h2 id="vector-10">Vector (1.0)</h2>
 <p>To register a user-defined type, you can use the macro : <code>CVECTOR(type, name, eq_operator_func)</code> The equal operator func needs to have this signature : int {func_name}(const {T}* a, const {T}* b) with {T} the type of the vector
 List of vector functions with {T} the name of the type :</p>
@@ -1019,7 +1023,9 @@ List of vector functions with {T} the name of the type :</p>
 <li><code>{T}_append(vec, vec)</code> concatenate second vector to the first.</li>
 <li><code>{T}_contains(vec, elem)</code> returns 1 if vec contains the element.</li>
 </ul>
+<hr />
 <h2 id="umap-10">Umap (1.0)</h2>
+<hr />
 <h2 id="memory-10">Memory (1.0)</h2>
 <p>The cmemory lib is a collection of helpers to manage C memory, it offers features such as safe-delete, memory alloc check, value swap, static array count, &hellip;
 List of features :</p>
@@ -1032,8 +1038,9 @@ List of features :</p>
 <li><code>cmin(a, b)</code> returns the less</li>
 <li><code>cmax(a, b)</code> returns the greater</li>
 </ul>
+<hr />
 <h2 id="optional-10">Optional (1.0)</h2>
-<p>The Coptional library allows functions to return either a value or nothing, which can be useful for:</p>
+<p>The coptional library allows functions to return either a value or nothing, which can be useful for:</p>
 <ul>
 <li>Functions that might fail without throwing exceptions,</li>
 <li>Replacing sentinel values (-1, NULL) with safe handling,</li>
@@ -1045,7 +1052,35 @@ With {T} being the type registered via the macro COPTIONAL(TYPE, NAME):</p>
 <li><code>{T}_opt_return(value)</code> – returns an optional containing a value.</li>
 <li><code>{T}_opt_none()</code> – returns an empty optional.</li>
 </ul>
+<hr />
 <h2 id="filesystem-10">Filesystem (1.0)</h2>
+<p>The cfilesystem library provides utilities to manipulate file paths and interact with the filesystem in a cross-platform way. Paths are represented by the cfs_path struct, which internally uses a vector of strings for path components.
+Functions:</p>
+<h3 id="normalization-and-conversion">Normalization and conversion:</h3>
+<ul>
+<li><code>cfs_normalize_slashes(char* path)</code> – converts all backslashes () to slashes (/) in a string.</li>
+<li><code>cfs_str_to_path(const char* in)</code> – converts a C string path into a cfs_path object, splitting components at / or .</li>
+<li><code>cfs_to_str(cfs_path in)</code> – converts a cfs_path back to a Unix-style string path (/ separators).</li>
+<li><code>cfs_to_str_Win(cfs_path in)</code> – converts a cfs_path back to a Windows-style string path (\ separators).</li>
+</ul>
+<h3 id="filesystem-checks">Filesystem checks:</h3>
+<ul>
+<li><code>cfs_exists(cfs_path path)</code> – returns 1 if the path exists.</li>
+<li><code>cfs_is_file(cfs_path path)</code> – returns 1 if path is a regular file.</li>
+<li><code>cfs_is_dir(cfs_path path)</code> – returns 1 if path is a directory.</li>
+<li><code>cfs_file_size(cfs_path path)</code> – returns file size in bytes, -1 on error.</li>
+<li><code>cfs_is_absolute(cfs_path path)</code> – returns 1 if path is absolute.</li>
+</ul>
+<h3 id="path-component-utilities">Path component utilities:</h3>
+<ul>
+<li><code>cfs_file_name(cfs_path path)</code> – returns the filename without extension of the last component, or NULL if none.</li>
+<li><code>cfs_extension(cfs_path path)</code> – returns the extension of the last component, or NULL if none.</li>
+<li><code>cfs_parent_path(cfs_path in)</code> – returns a cfs_path representing the parent directory, removing the last component.</li>
+</ul>
+<h3 id="notes">Notes:</h3>
+<p>All functions returning strings allocate memory that the caller must free.
+Paths are internally normalized to / for simplicity; use <code>cfs_to_str_Win</code> for Windows-specific operations.
+<code>cfs_path</code> vectors must be freed using <code>char_ptr_vec_freevec(&amp;path.components)</code> when no longer needed to avoid memory leaks.</p>
 
 </body>
 </html>

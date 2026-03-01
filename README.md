@@ -1,12 +1,20 @@
 # C-ULIB
 C-ulib is an extension of C-standard library and offers features such as vector, map, smart string, and others.
 
+---
+
 ## Class (2.0)
 This header provides a complete objet oriented programming features in C.
 
+---
+
 ## Map (1.1)
 
+---
+
 ## String (1.1)
+
+---
 
 ## Vector (1.0)
 To register a user-defined type, you can use the macro : `CVECTOR(type, name, eq_operator_func)` The equal operator func needs to have this signature : int {func_name}(const {T}* a, const {T}* b) with {T} the type of the vector
@@ -27,7 +35,11 @@ List of vector functions with {T} the name of the type :
 - `{T}_append(vec, vec)` concatenate second vector to the first.
 - `{T}_contains(vec, elem)` returns 1 if vec contains the element.
 
+---
+
 ## Umap (1.0)
+
+---
 
 ## Memory (1.0)
 The cmemory lib is a collection of helpers to manage C memory, it offers features such as safe-delete, memory alloc check, value swap, static array count, ...
@@ -40,8 +52,10 @@ List of features :
 - `cmin(a, b)` returns the less
 - `cmax(a, b)` returns the greater
 
+---
+
 ## Optional (1.0)
-The Coptional library allows functions to return either a value or nothing, which can be useful for:
+The coptional library allows functions to return either a value or nothing, which can be useful for:
 - Functions that might fail without throwing exceptions,
 - Replacing sentinel values (-1, NULL) with safe handling,
 - Expressing optional parameters or results.
@@ -51,4 +65,35 @@ With {T} being the type registered via the macro COPTIONAL(TYPE, NAME):
 - `{T}_opt_return(value)` – returns an optional containing a value.
 - `{T}_opt_none()` – returns an empty optional.
 
+---
+
 ## Filesystem (1.0)
+The cfilesystem library provides utilities to manipulate file paths and interact with the filesystem in a cross-platform way. Paths are represented by the cfs_path struct, which internally uses a vector of strings for path components.
+Functions:
+
+### Normalization and conversion:
+
+- `cfs_normalize_slashes(char* path)` – converts all backslashes (\) to slashes (/) in a string.
+- `cfs_str_to_path(const char* in)` – converts a C string path into a cfs_path object, splitting components at / or \.
+- `cfs_to_str(cfs_path in)` – converts a cfs_path back to a Unix-style string path (/ separators).
+- `cfs_to_str_Win(cfs_path in)` – converts a cfs_path back to a Windows-style string path (\ separators).
+
+### Filesystem checks:
+
+- `cfs_exists(cfs_path path)` – returns 1 if the path exists.
+- `cfs_is_file(cfs_path path)` – returns 1 if path is a regular file.
+- `cfs_is_dir(cfs_path path)` – returns 1 if path is a directory.
+- `cfs_file_size(cfs_path path)` – returns file size in bytes, -1 on error.
+- `cfs_is_absolute(cfs_path path)` – returns 1 if path is absolute.
+
+### Path component utilities:
+
+- `cfs_file_name(cfs_path path)` – returns the filename without extension of the last component, or NULL if none.
+- `cfs_extension(cfs_path path)` – returns the extension of the last component, or NULL if none.
+- `cfs_parent_path(cfs_path in)` – returns a cfs_path representing the parent directory, removing the last component.
+
+### Notes:
+
+All functions returning strings allocate memory that the caller must free.
+Paths are internally normalized to / for simplicity; use `cfs_to_str_Win` for Windows-specific operations.
+`cfs_path` vectors must be freed using `char_ptr_vec_freevec(&path.components)` when no longer needed to avoid memory leaks.
