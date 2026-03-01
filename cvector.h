@@ -163,7 +163,7 @@ int schar_eq(const signed char* a, const signed char* b)
 }
 CVECTOR(signed char, schar, schar_eq)
 
-int uchar_eq(const unsinged char* a, const unsigned char* b)
+int uchar_eq(const unsigned char* a, const unsigned char* b)
 {
 	return *a == *b;
 }

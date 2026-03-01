@@ -10,6 +10,9 @@
 #ifndef CMEMORY_CUILB_H
 #define CMEMORY_CUILB_H
 
+#include <stdlib.h>
+#include <stdio.h>
+
 //alloc and init to 0
 #define cnew(type) (type*)calloc(1, sizeof(type))
 //alloca check

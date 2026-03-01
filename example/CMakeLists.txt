@@ -9,3 +9,11 @@ set(CMAKE_C_COMPILER gcc)
 add_executable(vector
 vector_eg.c
 )
+
+add_executable(memory
+memory_eg.c
+)
+
+add_executable(optional
+optional_eg.c
+)

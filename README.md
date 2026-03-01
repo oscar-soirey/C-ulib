@@ -40,4 +40,15 @@ List of features :
 - `cmin(a, b)` returns the less
 - `cmax(a, b)` returns the greater
 
+## Optional (1.0)
+The Coptional library allows functions to return either a value or nothing, which can be useful for:
+- Functions that might fail without throwing exceptions,
+- Replacing sentinel values (-1, NULL) with safe handling,
+- Expressing optional parameters or results.
+
+List of features :
+With {T} being the type registered via the macro COPTIONAL(TYPE, NAME):
+- `{T}_opt_return(value)` – returns an optional containing a value.
+- `{T}_opt_none()` – returns an empty optional.
+
 ## Filesystem (1.0)

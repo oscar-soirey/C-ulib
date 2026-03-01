@@ -1,5 +1,6 @@
 #include "../cvector.h"
 
+//create custom structure and register type
 typedef struct {
 	int a;
 	int b;
@@ -7,10 +8,8 @@ typedef struct {
 }mystruct;
 int mystruct_eq(const mystruct* a, const mystruct* b)
 {
-	//compare que la valeur 'a' de la structure
-	return a->a == b->a;
+	return (a->a == b->a && a->b == b->b && a->c == b->c);
 }
-
 CVECTOR(mystruct, mystruct, mystruct_eq)
 
 int main()

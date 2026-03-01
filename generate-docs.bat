@@ -1,1 +1,2 @@
-mdtohtml README.md doc/index.html
+mdtohtml README.md docs/index.html
+pause
