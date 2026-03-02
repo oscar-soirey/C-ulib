@@ -17,3 +17,7 @@ memory_eg.c
 add_executable(optional
 optional_eg.c
 )
+
+add_executable(filesystem
+filesystem_eg.c
+)

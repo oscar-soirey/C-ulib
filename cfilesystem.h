@@ -36,21 +36,24 @@ cfs_path cfs_str_to_path(const char* in)
 {
 	//create path object
 	cfs_path path;
-	//init vector before we use it
-	path.components = {0};
+
+	//init vector before we use it, replace with vec_init function
+	memset(&path.components, 0, sizeof(path.components));
+	path.components.size = 0;
+	path.components.capacity = 0;
 
 	//modifiable copy
 	char* temp = strdup(in);
 	cfs_normalize_slashes(temp);
 
-	//split at '/'
-	char* token = strtok(temp, "/");
+	//split at '/' or '\'
+	char* token = strtok(temp, "/\\");
 	while(token)
 	{
 		//copy the token because we free the temp after the function
 		char* tok_copy = strdup(token);
-		char_ptr_vec_pushback(&path.components, tok_copy);
-		token = strtok(NULL, "/");
+		char_ptr_pushback(&path.components, tok_copy);
+		token = strtok(NULL, "/\\");
 	}
 
 	free(temp);
@@ -144,8 +147,10 @@ int cfs_is_absolute(cfs_path path)
 
 char* cfs_file_name(cfs_path path)
 {
-	//return last element of the path
-	char* filename = path.components.char_ptr_back();
+	//copy the last element of the path (the file)
+	char* filename = (char*)malloc(SYS_PATH_MAX*sizeof(char));
+	strcpy(filename, char_ptr_back(&path.components));
+
 	//search for last '.'
 	char* dot = strrchr(filename, '.');
 	if(dot != NULL)
@@ -158,7 +163,10 @@ char* cfs_file_name(cfs_path path)
 
 char* cfs_extension(cfs_path path)
 {
-	char* filename = path.components.char_ptr_back();
+	//same as file_name
+	char* filename = (char*)malloc(SYS_PATH_MAX*sizeof(char));
+	strcpy(filename, char_ptr_back(&path.components));
+
 	char* dot = strrchr(filename, '.');
 	if(dot == NULL || *(dot + 1) == '\0')
 	{
@@ -172,18 +180,85 @@ char* cfs_extension(cfs_path path)
 cfs_path cfs_parent_path(cfs_path in)
 {
 	cfs_path path;
-	path.components = {0};
+	//replace with vec_init function
+	memset(&path.components, 0, sizeof(path.components));
+	path.components.size = 0;
+	path.components.capacity = 0;
 
 	for(int i = 0; i < in.components.size; i++)
 	{
 		//not the last one
 		if(i+1 != in.components.size)
 		{
-			path.components.char_ptr_pushback(in.components.data[i]);
+			char_ptr_pushback(&path.components, in.components.data[i]);
 		}
 	}
 
 	return path;
+}
+
+void cfs_create_dir(cfs_path path)
+{
+
+}
+
+void cfs_remove_file(cfs_path path)
+{
+
+}
+
+void remove_dir(cfs_path path)
+{
+
+}
+
+/**
+ * Rename the last part of the path
+ */
+void cfs_rename(cfs_path path, const char* name)
+{
+
+}
+
+void cfs_copy(cfs_path src, cfs_path dst)
+{
+
+}
+
+void cfs_move(cfs_path src, cfs_path dst)
+{
+
+}
+
+/**
+ * List path and file of a directory
+ * @param glob recursive list
+ */
+char_ptr_vec cfs_list_dir(cfs_path path, int glob)
+{
+
+}
+
+cfs_path cfs_join(cfs_path a, cfs_path b)
+{
+
+}
+
+/**
+ * @return Last modified timestamp
+ */
+double cfs_last_modified(cfs_path path)
+{
+
+}
+
+typedef enum {
+	W, R, X
+}file_rights;
+
+file_rights cfs_permissions(cfs_path path)
+{
+
 }
 
 #endif

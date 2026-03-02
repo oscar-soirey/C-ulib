@@ -1056,6 +1056,10 @@ With {T} being the type registered via the macro COPTIONAL(TYPE, NAME):</p>
 <h2 id="filesystem-10">Filesystem (1.0)</h2>
 <p>The cfilesystem library provides utilities to manipulate file paths and interact with the filesystem in a cross-platform way. Paths are represented by the cfs_path struct, which internally uses a vector of strings for path components.
 Functions:</p>
+<h3 id="notes">Notes:</h3>
+<p>All functions returning strings allocate memory that the caller must free.
+Paths are internally normalized to / for simplicity; use <code>cfs_to_str_Win</code> for Windows-specific operations.
+<code>cfs_path</code> vectors must be freed using <code>char_ptr_vec_freevec(&amp;path.components)</code> when no longer needed to avoid memory leaks.</p>
 <h3 id="normalization-and-conversion">Normalization and conversion:</h3>
 <ul>
 <li><code>cfs_normalize_slashes(char* path)</code> – converts all backslashes () to slashes (/) in a string.</li>
@@ -1069,7 +1073,6 @@ Functions:</p>
 <li><code>cfs_is_file(cfs_path path)</code> – returns 1 if path is a regular file.</li>
 <li><code>cfs_is_dir(cfs_path path)</code> – returns 1 if path is a directory.</li>
 <li><code>cfs_file_size(cfs_path path)</code> – returns file size in bytes, -1 on error.</li>
-<li><code>cfs_is_absolute(cfs_path path)</code> – returns 1 if path is absolute.</li>
 </ul>
 <h3 id="path-component-utilities">Path component utilities:</h3>
 <ul>
@@ -1077,10 +1080,21 @@ Functions:</p>
 <li><code>cfs_extension(cfs_path path)</code> – returns the extension of the last component, or NULL if none.</li>
 <li><code>cfs_parent_path(cfs_path in)</code> – returns a cfs_path representing the parent directory, removing the last component.</li>
 </ul>
-<h3 id="notes">Notes:</h3>
-<p>All functions returning strings allocate memory that the caller must free.
-Paths are internally normalized to / for simplicity; use <code>cfs_to_str_Win</code> for Windows-specific operations.
-<code>cfs_path</code> vectors must be freed using <code>char_ptr_vec_freevec(&amp;path.components)</code> when no longer needed to avoid memory leaks.</p>
+<h3 id="not-implemented-yet">Not Implemented yet:</h3>
+<p>This functions are not implemented yet but will be for the 1.0.0 release.</p>
+<ul>
+<li><code>void cfs_is_absolute(cfs_path path)</code> – returns 1 if path is absolute.</li>
+<li><code>void cfs_create_dir(cfs_path path)</code> – creates a new directory at the given path.</li>
+<li><code>void cfs_remove_file(cfs_path path)</code> – removes a file at the given path.</li>
+<li><code>void cfs_remove_dir(cfs_path path)</code> – removes a directory at the given path (non-recursive by default).</li>
+<li><code>void cfs_rename(cfs_path path, const char* name)</code> – renames the last component of the path.</li>
+<li><code>void cfs_copy(cfs_path src, cfs_path dst)</code> – copies a file from src to dst.</li>
+<li><code>void cfs_move(cfs_path src, cfs_path dst)</code> – moves or renames a file or directory from src to dst.</li>
+<li><code>char_ptr_vec cfs_list_dir(cfs_path path, int glob)</code> – lists files and directories under path; if glob is true, lists recursively.</li>
+<li><code>cfs_path cfs_join(cfs_path a, cfs_path b)</code> – joins two paths into a single cfs_path.</li>
+<li><code>double cfs_last_modified(cfs_path path)</code> – returns the last modified timestamp of a file.</li>
+<li><code>file_rights cfs_permissions(cfs_path path)</code> – returns the file rights (read, write, execute) of the path.</li>
+</ul>
 
 </body>
 </html>

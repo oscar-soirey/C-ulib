@@ -71,6 +71,12 @@ With {T} being the type registered via the macro COPTIONAL(TYPE, NAME):
 The cfilesystem library provides utilities to manipulate file paths and interact with the filesystem in a cross-platform way. Paths are represented by the cfs_path struct, which internally uses a vector of strings for path components.
 Functions:
 
+### Notes:
+
+All functions returning strings allocate memory that the caller must free.
+Paths are internally normalized to / for simplicity; use `cfs_to_str_Win` for Windows-specific operations.
+`cfs_path` vectors must be freed using `char_ptr_vec_freevec(&path.components)` when no longer needed to avoid memory leaks.
+
 ### Normalization and conversion:
 
 - `cfs_normalize_slashes(char* path)` – converts all backslashes (\) to slashes (/) in a string.
@@ -84,7 +90,6 @@ Functions:
 - `cfs_is_file(cfs_path path)` – returns 1 if path is a regular file.
 - `cfs_is_dir(cfs_path path)` – returns 1 if path is a directory.
 - `cfs_file_size(cfs_path path)` – returns file size in bytes, -1 on error.
-- `cfs_is_absolute(cfs_path path)` – returns 1 if path is absolute.
 
 ### Path component utilities:
 
@@ -92,8 +97,17 @@ Functions:
 - `cfs_extension(cfs_path path)` – returns the extension of the last component, or NULL if none.
 - `cfs_parent_path(cfs_path in)` – returns a cfs_path representing the parent directory, removing the last component.
 
-### Notes:
+### Not Implemented yet:
+This functions are not implemented yet but will be for the 1.0.0 release.
 
-All functions returning strings allocate memory that the caller must free.
-Paths are internally normalized to / for simplicity; use `cfs_to_str_Win` for Windows-specific operations.
-`cfs_path` vectors must be freed using `char_ptr_vec_freevec(&path.components)` when no longer needed to avoid memory leaks.
+- `void cfs_is_absolute(cfs_path path)` – returns 1 if path is absolute.
+- `void cfs_create_dir(cfs_path path)` – creates a new directory at the given path.
+- `void cfs_remove_file(cfs_path path)` – removes a file at the given path.
+- `void cfs_remove_dir(cfs_path path)` – removes a directory at the given path (non-recursive by default).
+- `void cfs_rename(cfs_path path, const char* name)` – renames the last component of the path.
+- `void cfs_copy(cfs_path src, cfs_path dst)` – copies a file from src to dst.
+- `void cfs_move(cfs_path src, cfs_path dst)` – moves or renames a file or directory from src to dst.
+- `char_ptr_vec cfs_list_dir(cfs_path path, int glob)` – lists files and directories under path; if glob is true, lists recursively.
+- `cfs_path cfs_join(cfs_path a, cfs_path b)` – joins two paths into a single cfs_path.
+- `double cfs_last_modified(cfs_path path)` – returns the last modified timestamp of a file.
+- `file_rights cfs_permissions(cfs_path path)` – returns the file rights (read, write, execute) of the path.

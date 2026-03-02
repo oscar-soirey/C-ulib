@@ -1,6 +1,8 @@
 #ifndef COPTIONAL_CULIB_H
 #define COPTIONAL_CULIB_H
 
+#include <stddef.h>
+
 #define COPTIONAL(T, n) \
 typedef struct { \
 	int valid; \
@@ -9,11 +11,11 @@ typedef struct { \
 		T val; \
 	}; \
 }n##_opt; \
-static inline n##_opt T##_opt_return(T val) \
+static inline n##_opt n##_opt_return(T val) \
 { \
 	return (n##_opt){1, val}; \
 } \
-static inline n##_opt T##_opt_none() \
+static inline n##_opt n##_opt_none() \
 { \
 	return (n##_opt){0}; \
 }
@@ -41,6 +43,7 @@ COPTIONAL(long double, ldouble)
 COPTIONAL(bool, bool)
 #endif
 
-COPTIONAL(char*, char_ptr)
+typedef char* char_ptr;
+COPTIONAL(char_ptr, char_ptr)
 
 #endif
